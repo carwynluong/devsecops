@@ -1,0 +1,47 @@
+Vagrant.configure("2") do |config|
+    config.hostmanager.enabled = true 
+    config.hostmanager.manage_host = true
+    
+  ### Jenkins Server  ####
+    config.vm.define "jenkinserver" do |jenkinserver|
+      jenkinserver.vm.box = "geerlingguy/ubuntu2004"
+      jenkinserver.vm.hostname = "jenkinserver"
+      jenkinserver.vm.network "private_network", ip: "192.168.25.11"
+      jenkinserver.vm.provider "virtualbox" do |vb|
+       vb.memory = "4000"
+      end
+      jenkinserver.vm.provision "shell", path: "jenkins-setup.sh"  
+    end
+
+  ### Gitlab Server ####
+    config.vm.define "gitlabserver" do |gitlabserver|
+        gitlabserver.vm.box = "geerlingguy/ubuntu2004"
+        gitlabserver.vm.hostname = "gitlabserver"
+        gitlabserver.vm.network "private_network", ip: "192.168.25.12"
+        gitlabserver.vm.provider "virtualbox" do |vb|
+         vb.memory = "4000"
+        end
+    end
+  
+  ### Database Server ####
+    config.vm.define "db" do |db|
+      db.vm.box = "geerlingguy/ubuntu2004"
+      db.vm.hostname = "db"
+      db.vm.network "private_network", ip: "192.168.25.13"
+      db.vm.provider "virtualbox" do |vb|
+       vb.memory = "4000"
+      end
+    end
+  
+  ### App Server ####
+    config.vm.define "app" do |app|
+      app.vm.box = "geerlingguy/ubuntu2004"
+      app.vm.hostname = "app"
+      app.vm.network "private_network", ip: "192.168.25.14"
+      app.vm.provider "virtualbox" do |vb|
+       vb.memory = "4000"
+      end
+    end
+
+  end
+  
