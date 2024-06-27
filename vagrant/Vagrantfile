@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
         gitlabserver.vm.hostname = "gitlabserver"
         gitlabserver.vm.network "private_network", ip: "192.168.25.12"
         gitlabserver.vm.provider "virtualbox" do |vb|
-         vb.memory = "4000"
+         vb.memory = "8000"
         end
     end
   
@@ -33,12 +33,32 @@ Vagrant.configure("2") do |config|
       end
     end
   
-  ### App Server ####
-    config.vm.define "app" do |app|
-      app.vm.box = "geerlingguy/ubuntu2004"
-      app.vm.hostname = "app"
-      app.vm.network "private_network", ip: "192.168.25.14"
-      app.vm.provider "virtualbox" do |vb|
+  ### Development Server ####
+    config.vm.define "devserver" do |devserver|
+      devserver.vm.box = "geerlingguy/ubuntu2004"
+      devserver.vm.hostname = "devserver"
+      devserver.vm.network "private_network", ip: "192.168.25.14"
+      devserver.vm.provider "virtualbox" do |vb|
+       vb.memory = "8000"
+      end
+    end
+
+  ### Build Server ####
+    config.vm.define "buildserver" do |buildserver|
+      buildserver.vm.box = "geerlingguy/ubuntu2004"
+      buildserver.vm.hostname = "buildserver"
+      buildserver.vm.network "private_network", ip: "192.168.25.15"
+      buildserver.vm.provider "virtualbox" do |vb|
+       vb.memory = "8000"
+      end
+    end
+
+    ### Artifactory Server ####
+    config.vm.define "artifactoryserver" do |artifactoryserver|
+      artifactoryserver.vm.box = "geerlingguy/ubuntu2004"
+      artifactoryserver.vm.hostname = "artifactoryserver"
+      artifactoryserver.vm.network "private_network", ip: "192.168.25.16"
+      artifactoryserver.vm.provider "virtualbox" do |vb|
        vb.memory = "4000"
       end
     end
