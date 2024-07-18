@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: online-shop-backend-ingress
+  namespace: online-shop
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "carwyn.api.tech"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: online-shop-backend-service
+            port:
+              number: 5214

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: online-shop-backend-deployment
+  labels:
+    app: online-shop-backend
+  namespace: online-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: online-shop-backend
+  template:
+    metadata:
+      labels:
+        app: online-shop-backend
+    spec:
+      containers:
+      - name: online-shop-backend
+        image: kinkun.cloud/onlineshop/online-shop-be:2dd9a5b0
+        ports:
+        - containerPort: 5214
+        resources:
+          requests:
+            memory: 256Mi
+        # envFrom:
+        # - secretRef:
+        #     name: db-connection-secrets
+      imagePullSecrets:
+      - name: auth-registry

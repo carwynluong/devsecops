@@ -1,0 +1,1 @@
+kubectl create secret docker-registry auth-registry --docker-server=kinkun.cloud --docker-username=onlineshop --docker-password=13Au2002 -n online-shop
