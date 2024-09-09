@@ -1,0 +1,37 @@
+variables:
+    USER_PROJECT: "onlineshop"
+    IMAGE_VERSION: "$PORTUS_HOSTNAME/$PORTUS_USER/online-shop-fe:$CI_COMMIT_SHORT_SHA"
+stages:
+    - build
+    - push
+    - deploy
+
+build:
+    stage: build
+    variables:
+        GIT_STRATEGY: clone
+    before_script:
+        - docker login $PORTUS_HOSTNAME -u $PORTUS_USER -p $PORTUS_PASS
+    script:
+        - docker build -t $IMAGE_VERSION .
+    tags:
+        - online-shop-runner-build-shell
+
+push:
+    stage: push
+    script:
+        - docker push $IMAGE_VERSION
+    tags:
+        - online-shop-runner-build-shell
+    
+deploy:
+    stage: deploy
+    variables:
+        GIT_STRATEGY: clone
+    script:
+        - sed -i "s|dynamic_image|$IMAGE_VERSION|" ./manifest/fe-deployment.yml
+        - kubectl apply -f ./manifest/fe-deployment.yml
+    tags:
+        - k8s-master-1-runner-shell
+    only:
+        - tags
