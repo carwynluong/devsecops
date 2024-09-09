@@ -10,3 +10,4 @@ spec:
     - protocol: TCP 
       port: 5214
       targetPort: 5214
+ 

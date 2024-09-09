@@ -15,16 +15,17 @@ spec:
       labels:
         app: online-shop-backend
     spec:
-      containers:
+      hostNetwork: true 
+      containers: 
       - name: online-shop-backend
-        image: kinkun.cloud/onlineshop/online-shop-be:2dd9a5b0
+        image: kinkun.cloud/onlineshop/online-shop-be:2c0d236a
         ports:
         - containerPort: 5214
         resources:
           requests:
             memory: 256Mi
-        # envFrom:
-        # - secretRef:
-        #     name: db-connection-secrets
+        envFrom:
+        - secretRef:
+            name: db-connection-secrets
       imagePullSecrets:
       - name: auth-registry
