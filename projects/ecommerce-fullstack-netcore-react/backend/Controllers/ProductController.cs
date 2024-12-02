@@ -62,7 +62,7 @@ namespace backend.Controllers
                 return NotFound();
             }
         }
-
+        
         [HttpDelete("{productId}")]
         public IActionResult Delete(int productId)
         {
