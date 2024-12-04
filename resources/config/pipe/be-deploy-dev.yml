@@ -66,6 +66,7 @@ trivy scan image:
     script:
         - docker run --rm -v $(pwd):/${CI_PROJECT_NAME} -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --reset
         - docker run --rm -v $(pwd):/${CI_PROJECT_NAME} -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --format template --template "@contrib/html.tpl" --output /${CI_PROJECT_NAME}/${TRIVY_IMAGE_REPORT}.html $IMAGE_VERSION
+        # docker run --rm -v $(pwd):/report-folder -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --format template --template "@contrib/html.tpl" --output /report-folder/report-version-v1.0.2.html 211125756993.dkr.ecr.ap-southeast-1.amazonaws.com/nodejs-random-color:v1.0.2
     tags:
         - online-shop-runner-dev-shell
     artifacts:

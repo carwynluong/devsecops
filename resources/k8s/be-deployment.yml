@@ -15,10 +15,9 @@ spec:
       labels:
         app: online-shop-backend
     spec:
-      hostNetwork: true 
       containers: 
       - name: online-shop-backend
-        image: kinkun.cloud/onlineshop/online-shop-be:2c0d236a
+        image: kinkun.cloud/onlineshop/online-shop-be:production-v1.0_bcd074ab
         ports:
         - containerPort: 5214
         resources:

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: online-shop-frontend
-        image: kinkun.cloud/onlineshop/online-shop-fe:dea1ce95
+        image: dynamic_image
         ports:
         - containerPort: 80
         resources:

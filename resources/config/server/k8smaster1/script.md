@@ -44,14 +44,15 @@ k8s-master-1
 
 ## Helm installation
 ```
-wget https://get.helm.sh/helm-v3.14.4-linux-amd64.tar.gz\
+wget https://get.helm.sh/helm-v3.14.4-linux-amd64.tar.gz
+tar -xvf helm-v3.14.4-linux-amd64.tar.gz
 mv linux-admd64/helm /usr/bin/
 ```
 
 ## Kubernetes Dashboard installation
 ```
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm upgrade --install kubernetes-dashboard kubernestes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 
 vi admin-user-k8s.yml
 kubectl apply -f admin-user-k8s.yml
@@ -103,5 +104,5 @@ type: kubernetes.io/service-account-token
 ## ArgoCD installation
 ```
 # kubectl create namespace argocd
-# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yml
+# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
