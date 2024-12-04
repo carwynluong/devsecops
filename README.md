@@ -1,53 +1,57 @@
-# Installation
-## Setup Dockerfile
-```
-FROM jenkins/jenkins:2.414.2-jdk11
-USER root
-RUN apt-get update && apt-get install -y lsb-release python3-pip
-RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
-  https://download.docker.com/linux/debian/gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) \
-  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
-  https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-RUN apt-get update && apt-get install -y docker-ce-cli
-USER jenkins
-RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
-```
-## Build the Jenkins BlueOcean Docker Image (or pull and use the one I built)
-```
-docker build -t myjenkins-blueocean:2.414.2 .
+# Đồ Án Tốt Nghiệp
 
-#IF you are having problems building the image yourself, you can pull from my registry (It is version 2.332.3-1 though, the original from the video)
+## Giới Thiệu
 
-docker pull devopsjourney1/jenkins-blueocean:2.332.3-1 && docker tag devopsjourney1/jenkins-blueocean:2.332.3-1 myjenkins-blueocean:2.332.3-1
+Chào mừng đến với đồ án tốt nghiệp của tôi! Dưới đây là một cái nhìn tổng quan về dự án này.
 
-```
+## Mục Tiêu
 
-## Create the network 'jenkins'
-```
-docker network create jenkins
-```
-> Use 'docker network ls' to check
-## Run Container
-```
-docker run --name jenkins-blueocean --restart=on-failure --detach `
-  --network jenkins --env DOCKER_HOST=tcp://docker:2376 `
-  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 `
-  --volume jenkins-data:/var/jenkins_home `
-  --volume jenkins-docker-certs:/certs/client:ro `
-  --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.414.2
-```
+- **Phát triển một hệ thống tự động hóa triển khai**
+- **Tối ưu hóa hiệu suất và chi phí cho hệ thống**
+- **Đảm bảo tính bảo mật và tuân thủ các quy định**
 
-## Get the Password
-```
-docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
-```
-> First time run Jenkins have to get password
+## Nội Dung
 
-> Use command in terminal to get password
-## Connect to Jenkins
-```
-https://localhost:8080/
-```
-> Install as usual and crate admin
+### 1. Giới Thiệu Chung
+
+Đồ án này tập trung vào việc xây dựng quy trình triển khai tự động dựa trên văn hóa DevSecOps. Mục tiêu là cung cấp một giải pháp toàn diện để quản lý và triển khai ứng dụng hiệu quả, đồng thời đảm bảo an ninh và tối ưu chi phí.
+
+### 2. Kiến Trúc Hệ Thống
+
+Hệ thống được thiết kế dựa trên kiến trúc microservices, bao gồm các thành phần chính:
+
+- **Frontend**: Giao diện người dùng - ReactJS
+- **Backend**: Xử lý logic ứng dụng - .Net
+- **Database**: Lưu trữ dữ liệu - SQL
+
+### 3. Công Nghệ Sử Dụng
+
+- **Kubernetes**: Quản lý container
+- **Helm**: Công cụ quản lý ứng dụng Kubernetes
+- **Docker**: Đóng gói ứng dụng
+- **ArgoCD**: Triển khai liên tục
+- **AWS**: Cơ sở hạ tầng đám mây
+
+### 4. Kết Quả Đạt Được
+
+- **Giảm thời gian triển khai từ 2 giờ xuống 15 phút**
+- **Tiết kiệm 20% chi phí vận hành**
+- **Tăng cường bảo mật hệ thống**
+
+### 5. Hướng Phát Triển
+
+- **Tích hợp AI để tự động hóa quản lý**
+- **Mở rộng hệ thống cho nhiều người dùng hơn**
+
+## Kết Luận
+
+- Thứ nhất, nghiên cứu đã tiến hành so sánh chi tiết giữa DevSecOps và phương pháp triển khai truyền thống, đồng thời nêu rõ những điểm nổi bật và cải tiến so với DevOps
+- Thứ hai, nghiên cứu đã thành công trong việc xây dựng một quy trình DevSecOps tổng quát có thể áp dụng cho nhiều dự án khác nhau
+
+## Liên Hệ
+
+- **Họ Tên**: Lương Trung Kiên
+- **Email**: kinlng2002@gmail.com
+- **Điện Thoại**: 0335023957
+
+Cảm ơn bạn đã dành thời gian đọc về đồ án của tôi!
