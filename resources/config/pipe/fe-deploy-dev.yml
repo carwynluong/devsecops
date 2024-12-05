@@ -89,28 +89,6 @@ snyk scan:
         paths:
             - $SNYKSCAN_REPORT.html
 
-trivyfs scan:
-    stage: test source code
-    variables:
-        GIT_STRATEGY: clone
-    script:
-        - whoami
-        - |
-            docker run --rm \
-            -v $PWD:/${CI_PROJECT_NAME} \
-            -v /var/run/docker.sock:/var/run/docker.sock \
-            aquasec/trivy fs /${CI_PROJECT_NAME} \
-            --severity HIGH,CRITICAL \
-            --format template \
-            --template "@contrib/html.tpl" \
-            --output /${CI_PROJECT_NAME}/$TRIVYFS_REPORT.html
-        # - sudo chown gitlab-runner:gitlab-runner TRIVYFS_REPORT.html
-    tags:
-        - online-shop-runner-dev-shell
-    artifacts:
-        paths:
-            - $TRIVYFS_REPORT.html
-
 trivy scan image:
     stage: security scan image
     variables:
