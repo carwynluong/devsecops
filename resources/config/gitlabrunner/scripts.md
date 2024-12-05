@@ -14,28 +14,3 @@ Install on DevServer and BuildServer
 # gitlab-runner register
 ```
 
-## Cloud beaver installation
-```
-docker-compose up -d
-```
-```
-version: '3.8'
-
-services:
-  cloudbeaver:
-    image: dbeaver/cloudbeaver
-    container_name: cloudbeaver
-    restart: always
-    ports:
-      - "8978:8978"
-    volumes:
-      - cloudbeaver-data:/opt/cloudbeaver/workspace
-
-volumes:
-  cloudbeaver-data:
-    driver: local
-```
-
-## Migrate database
-- Copy table-init.sql to Cloudbeaver and run script
-- Then copy run data-init.sql

@@ -18,7 +18,7 @@ spec:
       hostNetwork: true 
       containers: 
       - name: online-shop-backend
-        image: kinkun.cloud/onlineshop/online-shop-be:final-pipeline_bb77f828
+        image: kinkun.cloud/onlineshop/online-shop-be:final-pipeline_ed2e8b41
         ports:
         - containerPort: 5214
         resources:
@@ -33,34 +33,3 @@ spec:
         - ip: "192.168.25.12"
       hostnames:
           - "carwyn.gitlabserver.tech"
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: online-shop-backend-deployment
-#   labels:
-#     app: online-shop-backend
-#   namespace: online-shop
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: online-shop-backend
-#   template:
-#     metadata:
-#       labels:
-#         app: online-shop-backend
-#     spec:
-#       containers: 
-#       - name: online-shop-backend
-#         image: kinkun.cloud/onlineshop/online-shop-be:production-v1.0_bcd074ab
-#         ports:
-#         - containerPort: 5214
-#         resources:
-#           requests:
-#             memory: 256Mi
-#         envFrom:
-#         - secretRef:
-#             name: db-connection-secrets
-#       imagePullSecrets:
-#       - name: auth-registry
