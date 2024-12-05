@@ -1,0 +1,49 @@
+- Codeclimate
+    docker run --rm \ 
+    --env CODECLIMATE_CODE="$PWD" \ 
+    --volume "$PWD":/code \
+    --volume /var/run/docker.sock:/var/run/docker.sock \ 
+    --volume /tmp/cc:/tmp/cc \
+    codeclimate/codeclimate analyze -f html > $CODECLIMATE_REPORT.html 
+
+    --rm: Xóa container sau khi chạy xong
+    analyze -f html: Dịnh dạng file là html 
+
+------------------------------------------------------
+- Snyk
+    - |
+        docker build --rm \
+            --network host \
+            --build-arg SNYK_AUTH_TOKEN=$SNYK_TOKEN \
+            --build-arg OUTPUT_FILENAME=$SNYKSCAN_REPORT -t $SNYKSCAN_REPORT -f Dockerfile-snyk .
+        - docker create --name $SNYKSCAN_REPORT $SNYKSCAN_REPORT
+        - docker cp $SNYKSCAN_REPORT:/app/$SNYKSCAN_REPORT.html .
+        - chown gitlab-runner:gitlab-runner $SNYKSCAN_REPORT.html
+        - docker rm $SNYKSCAN_REPORT
+        - docker rmi $SNYKSCAN_REPORT
+
+    - Tạo một file Dockerfile-snyk trong file đó đã có có command chạy test
+    - Chỉ cần build ra và chạy là được
+
+------------------------------------------------------
+- Arachni
+    - |
+        docker run --rm \
+        -v /tmp/:/tmp/ \
+        arachni bin/arachni \
+        --output-verbose \
+        --scope-include-subdomains $FE_ADDRESS \
+        --report-save-path=/tmp/$ARACHNI_WEBSITE_REPORT.afr 
+    - |
+        docker run --rm \
+        -v /tmp/:/tmp/ \
+        arachni bin/arachni_reporter /tmp/$ARACHNI_WEBSITE_REPORT.afr \
+        --reporter=html:outfile=/tmp/$ARACHNI_WEBSITE_REPORT.html.zip
+    - sudo chmod 777 /tmp/$ARACHNI_WEBSITE_REPORT.html.zip
+    - cp /tmp/$ARACHNI_WEBSITE_REPORT.html.zip .
+
+    Câu lệnh đầu tiên sẽ quét ra file dạng .afr và câu lệnh thứ 2 là chuyển qua dạng html
+
+    -v /tmp/:/tmp/ để mount ra bên ngoài host vì khi chạy container nó sẽ xuất file ra foler tmp nk mà là bên trong container
+
+    

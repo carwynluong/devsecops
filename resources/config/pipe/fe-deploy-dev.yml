@@ -124,7 +124,7 @@ security scan website:
             arachni bin/arachni \
             --output-verbose \
             --scope-include-subdomains $FE_ADDRESS \
-            --report-save-path=/tmp/$ARACHNI_WEBSITE_REPORT.afr
+            --report-save-path=/tmp/$ARACHNI_WEBSITE_REPORT.afr 
         - |
             docker run --rm \
             -v /tmp/:/tmp/ \

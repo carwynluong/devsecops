@@ -51,12 +51,12 @@ codeclimate:
         GIT_STRATEGY: clone
     script:
     - |
-        docker run --rm \
-        --env CODECLIMATE_CODE="$PWD" \
+        docker run --rm \ 
+        --env CODECLIMATE_CODE="$PWD" \ 
         --volume "$PWD":/code \
-        --volume /var/run/docker.sock:/var/run/docker.sock \
+        --volume /var/run/docker.sock:/var/run/docker.sock \ 
         --volume /tmp/cc:/tmp/cc \
-        codeclimate/codeclimate analyze -f html > $CODECLIMATE_REPORT.html
+        codeclimate/codeclimate analyze -f html > $CODECLIMATE_REPORT.html 
     tags:
         - online-shop-runner-dev-shell
     artifacts:
@@ -75,9 +75,9 @@ snyk scan:
             --build-arg OUTPUT_FILENAME=$SNYKSCAN_REPORT -t $SNYKSCAN_REPORT -f Dockerfile-snyk .
         - docker create --name $SNYKSCAN_REPORT $SNYKSCAN_REPORT
         - docker cp $SNYKSCAN_REPORT:/app/$SNYKSCAN_REPORT.html .
-        - chown gitlab-runner:gitlab-runner $SNYKSCAN_REPORT.html
-        - docker rm $SNYKSCAN_REPORT
-        - docker rmi $SNYKSCAN_REPORT
+        # - chown gitlab-runner:gitlab-runner $SNYKSCAN_REPORT.html
+        # - docker rm $SNYKSCAN_REPORT
+        # - docker rmi $SNYKSCAN_REPORT
     tags:
         - online-shop-runner-dev-shell
     artifacts:
@@ -115,5 +115,5 @@ deploy-prd:
         - kubectl apply -f ./manifest/be-deployment.yml
     tags:
         - k8smaster-shell
-    only:
-        - tags
+    # only:
+    #     - tags
