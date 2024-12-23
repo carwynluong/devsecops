@@ -130,8 +130,6 @@ security scan website:
             -v /tmp/:/tmp/ \
             arachni bin/arachni_reporter /tmp/$ARACHNI_WEBSITE_REPORT.afr \
             --reporter=html:outfile=/tmp/$ARACHNI_WEBSITE_REPORT.html.zip
-        - sudo chmod 777 /tmp/$ARACHNI_WEBSITE_REPORT.html.zip
-        - cp /tmp/$ARACHNI_WEBSITE_REPORT.html.zip .
     tags:
         - online-shop-runner-dev-shell
     artifacts:

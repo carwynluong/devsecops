@@ -26,7 +26,7 @@ build:
         - online-shop-runner-build-shell
 
 push:
-    stage: push
+    stage: push 
     script:
         - docker push $IMAGE_VERSION
     tags:
@@ -39,7 +39,6 @@ deploy-dev:
     script:
         - docker pull $IMAGE_VERSION
         - |
-            sudo su ${USER_PROJECT} -c \
             "docker rm -f backend-container; \
             docker run --name backend-container -dp $BE_PORT $IMAGE_VERSION"
     tags:
@@ -75,9 +74,6 @@ snyk scan:
             --build-arg OUTPUT_FILENAME=$SNYKSCAN_REPORT -t $SNYKSCAN_REPORT -f Dockerfile-snyk .
         - docker create --name $SNYKSCAN_REPORT $SNYKSCAN_REPORT
         - docker cp $SNYKSCAN_REPORT:/app/$SNYKSCAN_REPORT.html .
-        # - chown gitlab-runner:gitlab-runner $SNYKSCAN_REPORT.html
-        # - docker rm $SNYKSCAN_REPORT
-        # - docker rmi $SNYKSCAN_REPORT
     tags:
         - online-shop-runner-dev-shell
     artifacts:
@@ -109,7 +105,7 @@ trivy scan image:
 deploy-prd:
     stage: deploy to production
     variables:
-        GIT_STRATEGY: clone
+        GIT_STRAT EGY: clone
     script:
         - sed -i "s|dynamic_image|$IMAGE_VERSION|" ./manifest/be-deployment.yml
         - kubectl apply -f ./manifest/be-deployment.yml

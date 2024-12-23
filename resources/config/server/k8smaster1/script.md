@@ -106,3 +106,11 @@ type: kubernetes.io/service-account-token
 # kubectl create namespace argocd
 # kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
+
+## Ingress-nginx installation
+```
+# helm repo add ingress-ngĩn https://kubernetes.github.io/ingress-ngĩn
+# helm repo update
+# helm pull ingress-nginx/ingress-nginx
+```
+

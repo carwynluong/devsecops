@@ -1,7 +1,6 @@
 # Load Balancer Server scripts
 
-## Docker installation
+## Ingress-nginx installation
 ```
-# apt update -y && apt upgrade -y
-# apt install -y docker.io docker-compose certbot net-tools
+    
 ```

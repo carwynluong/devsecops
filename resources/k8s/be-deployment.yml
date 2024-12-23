@@ -29,7 +29,3 @@ spec:
             name: db-connection-secrets
       imagePullSecrets:
       - name: auth-registry
-      hostAliases:
-        - ip: "192.168.25.12"
-      hostnames:
-          - "carwyn.gitlabserver.tech"

@@ -26,6 +26,31 @@
     - Chỉ cần build ra và chạy là được
 
 ------------------------------------------------------
+- Trivy
+    - |
+        docker run --rm \
+        -v $(pwd):/${CI_PROJECT_NAME} \
+        -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --reset
+    - |
+        docker run --rm \
+        -v $(pwd):/${CI_PROJECT_NAME} \
+        -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image \
+        --format template \
+        --template "@contrib/html.tpl" \
+        --output /${CI_PROJECT_NAME}/$TRIVY_IMAGE_REPORT.html $IMAGE_VERSION
+
+-v $(pwd):/${CI_PROJECT_NAME}: Mount thư mục hiện tại (current working directory) vào container tại đường dẫn /$(CI_PROJECT_NAME).
+-v /var/run/docker.sock:/var/run/docker.sock: Mount Docker socket vào container để Trivy có thể tương tác với Docker daemon.
+aquasec/trivy image --reset: Chạy lệnh Trivy với tùy chọn --reset để xóa dữ liệu cache của Trivy.
+
+-v $(pwd):/${CI_PROJECT_NAME}: Mount thư mục hiện tại vào container tại đường dẫn /$(CI_PROJECT_NAME).
+-v /var/run/docker.sock:/var/run/docker.sock: Mount Docker socket vào container để Trivy có thể tương tác với Docker daemon.
+aquasec/trivy image: Chạy lệnh Trivy để quét image Docker.
+--format template: Định dạng output theo template.
+--template "@contrib/html.tpl": Sử dụng template HTML được cung cấp bởi Trivy.
+--output /${CI_PROJECT_NAME}/$TRIVY_IMAGE_REPORT.html: Xuất kết quả quét ra file HTML tại đường dẫn /$(CI_PROJECT_NAME)/$TRIVY_IMAGE_REPORT.html.
+
+------------------------------------------------------
 - Arachni
     - |
         docker run --rm \
@@ -47,3 +72,17 @@
     -v /tmp/:/tmp/ để mount ra bên ngoài host vì khi chạy container nó sẽ xuất file ra foler tmp nk mà là bên trong container
 
     
+--------------------------------------------------------
+
+- sed -i "s|dynamic_image|$IMAGE_VERSION|" ./manifest/fe-deployment.yml
+- kubectl apply -f ./manifest/fe-deployment.yml
+
+Lệnh sed -i "s|dynamic_image|$IMAGE_VERSION|" ./manifest/fe-deployment.yml:
+
+sed là một công cụ dòng lệnh được sử dụng để chỉnh sửa văn bản trong tệp.
+Tùy chọn -i cho phép sed chỉnh sửa tệp trực tiếp, thay vì gửi kết quả chỉnh sửa ra stdout.
+"s|dynamic_image|$IMAGE_VERSION|" là một biểu thức thay thế, trong đó:
+s|...|...| là cú pháp của sed để thay thế một chuỗi văn bản.
+dynamic_image là chuỗi cần được thay thế.
+$IMAGE_VERSION là giá trị mới sẽ thay thế dynamic_image. Biến $IMAGE_VERSION được thay thế bởi giá trị của biến môi trường cùng tên.
+./manifest/fe-deployment.yml là đườn
